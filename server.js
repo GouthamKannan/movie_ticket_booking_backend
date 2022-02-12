@@ -16,23 +16,27 @@ app.use(cookieParser());
 
 app.use((req, res, next) => {
   if (req.cookies.session_id) {
-      try {
-          userDetails = jwt.verify(req.cookies.session_id, JWT_SIGNING_KEY)
-          req.mailId = userDetails
-      } catch (error) {
-          console.error('Error in verifying JWT :: ', error)
-          return res.status(401).json({ success: false, message: "Invalid session" })
-      }
-      next()
-  }
-  next()
-})
+    try {
+      userDetails = jwt.verify(req.cookies.session_id, JWT_SIGNING_KEY);
+      req.mailId = userDetails;
+    } catch (error) {
+      console.error("Error in verifying JWT :: ", error);
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid session" });
+    }
+    next();
+  } else next();
+});
 
 app.use("/users", userRouter);
 app.use("/theatre", theatreRouter);
 app.use("/movie", movieRouter);
 app.use("/booking", bookingRouter);
 
+app.get("/", (req, res) => {
+  return res.json({ success: false, message: "helloworld" });
+});
 
 var server = app.listen(3000, () => {
   console.log(`server listening to ${server.address().port}`);
