@@ -38,8 +38,8 @@ app.get("/", (req, res) => {
   return res.json({ success: false, message: "helloworld" });
 });
 
-var server = app.listen(3000, () => {
+var server = app.listen(process.env.PORT, () => {
   console.log(`server listening to ${server.address().port}`);
 });
 
-server.setTimeout(10000);
+server.setTimeout(100000);
