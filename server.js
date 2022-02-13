@@ -7,11 +7,13 @@ const userRouter = require("./routes/users");
 const movieRouter = require("./routes/movie");
 const bookingRouter = require("./routes/booking");
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
 
 const JWT_SIGNING_KEY = process.env.JWT_SIGNING_KEY;
 var app = express();
 
 app.use(express.json());
+app.use(cors({ origin: "*" }));
 app.use(cookieParser());
 
 app.use((req, res, next) => {
